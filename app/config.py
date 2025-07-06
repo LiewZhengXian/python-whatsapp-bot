@@ -14,11 +14,13 @@ def load_configurations(app):
     app.config["VERSION"] = os.getenv("VERSION")
     app.config["PHONE_NUMBER_ID"] = os.getenv("PHONE_NUMBER_ID")
     app.config["VERIFY_TOKEN"] = os.getenv("VERIFY_TOKEN")
-
-
-def configure_logging():
+    app.config["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")  
+def configure_logging(log_file="./app/logs/app.log"):
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        stream=sys.stdout,
+        handlers=[
+            logging.FileHandler(log_file, encoding='utf-8'),
+            logging.StreamHandler()  # Optional: also log to console
+        ]
     )
